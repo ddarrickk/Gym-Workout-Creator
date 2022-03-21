@@ -1,0 +1,90 @@
+#WORKOUT GENERATOR#
+#Goal of Code - Create a workout routine depending on what parts of body are lacking in strength
+areas = ["Core", "Arms", "Back", "Chest", "Legs", "Shoulders"]
+gymorhome = ["Gym", "Home"]
+muscleList = [
+"Upper Abs",' ', ' ', ' ', 
+"Lower Abs",' ', ' ', ' ', 
+"Biceps", ' ', ' ', ' ', 
+"Forearms", ' ', ' ', ' ', 
+"Triceps", ' ', ' ', ' ', 
+"Lats", ' ', ' ', ' ', 
+"Rhomboids", ' ', ' ', ' ', 
+"Traps", ' ', ' ', ' ', 
+"Glutes", ' ', ' ', ' ', 
+"Upper Pecs", ' ', ' ', ' ', 
+"Middle Pecs", ' ', ' ', ' ', 
+"Lower Pecs", ' ', ' ', ' ', 
+"Hamstrings", ' ', ' ', ' ', 
+"Quads", ' ', ' ', ' ', 
+"Calves",' ', ' ', ' ', 
+"Front Delts", ' ', ' ', ' ', 
+"Back Delts"]
+
+muscleDict = {
+"Gym": {
+    "Core": {"Upper Abs", "Lower Abs"}, 
+    "Arms": {"Biceps", "Forearms", "Triceps"},
+    "Back": {"Lats", "Rhomboids", "Traps", "Glutes"},
+    "Chest": {"Upper Pecs", "Middle Pecs", "Lower Pecs"},
+    "Legs": {"Hamstrings", "Quads", "Calves"}, 
+    "Shoulders": {"Front Delts", "Back Delts"},
+    },
+"Home": {
+    "Core": {"Upper Abs," "Lower Abs"}, 
+    "Arms": {"Biceps", "Forearms", "Triceps"},
+    "Back": {"Lats", "Rhomboids", "Traps", "Glutes"},
+    "Chest": {"Upper Pecs", "Middle Pecs", "Lower Pecs"},
+    "Legs": {"Hamstrings", "Quads", "Calves"}, 
+    "Shoulders": {"Front Delts", "Back Delts"},
+    },
+}
+
+def focus():
+    if "" not in areas:
+        return True
+    return False
+
+def checkExercisesTxt(lineNum):
+    exercise_file = open("exercises.txt", "r")
+    for line in exercise_file:
+        print(exercise_file.readlines()[lineNum], end='')
+        exercise_file.close
+
+def workoutOutput(gymorhome, part, musclePos):
+    if specificMuscleChoice in muscleDict[gymorhome][part]:
+        print("Use this " + gymorhome + " workout for your " + specificMuscleChoice + ":")
+        if specificMuscleChoice == muscleExercises(musclePos):
+            muscleExercises(musclePos)
+    else:
+        print("Choose one of these " + part + " muscles: ")
+        print(muscleDict[gymorhome][part])
+    return False
+
+def muscleExercises(exerciseLine1):
+        checkExercisesTxt(exerciseLine1+1)
+        checkExercisesTxt(exerciseLine1+2)
+        checkExercisesTxt(exerciseLine1+3)
+    
+while focus():
+    part = input("What area do you feel is underdeveleoped? ")
+    if part not in areas:
+        print('''Please enter "Core", "Arms", "Back", "Chest", "Legs", or "Shoulders"''')
+    elif part in areas:
+        schedule = input("How many days a week do you work out for? ")
+        try:
+            if 1 <= int(schedule) <= 7:
+                session = input("How many minutes do you work out for? ")
+                try:
+                    if 1 <= int(session) <= 1440:
+                        gymOrHomeChoice = input("Do you work out at home or in the gym? ")
+                        if gymOrHomeChoice not in gymorhome:
+                            gymOrHomeChoice = input('''Please enter either "Gym" or "Home": ''')
+                except ValueError:
+                    print("Enter a number: ")
+        except ValueError:
+            print("Enter a number: ")
+        specificMuscleChoice = input("What muscle do you want to focus on? ")
+        muscleLine = muscleList.index(specificMuscleChoice)
+        workoutOutput(gymOrHomeChoice, part, muscleLine)
+        break
