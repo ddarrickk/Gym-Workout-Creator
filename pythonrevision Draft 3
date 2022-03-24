@@ -1,7 +1,7 @@
 #WORKOUT GENERATOR#
 #Goal of Code - Create a workout routine depending on what parts of body are lacking in strength
 areas = ["Core", "Arms", "Back", "Chest", "Legs", "Shoulders"]
-gymorhome = ["Gym", "Home"]
+gymOrHome = ["Gym", "Home"]
 muscleList = [
 "Upper Abs",'','','', 
 "Lower Abs",'','','', 
@@ -30,7 +30,7 @@ muscleDict = {
     "Shoulders": {"Front Delts", "Back Delts"},
     },
 "Home": {
-    "Core": {"Upper Abs," "Lower Abs"}, 
+    "Core": {"Upper Abs", "Lower Abs"}, 
     "Arms": {"Biceps", "Forearms", "Triceps"},
     "Back": {"Lats", "Rhomboids", "Traps", "Glutes"},
     "Chest": {"Upper Pecs", "Middle Pecs", "Lower Pecs"},
@@ -44,32 +44,44 @@ def focus():
         return True
     return False
 
-def checkExercisesTxt(lineNum):
-    exercise_file = open("exercisesGym.txt", "r")
-    for line in exercise_file:
-        print(exercise_file.readlines()[lineNum], end='')
-        exercise_file.close
-        return True
-    return False
-
 def workoutOutput(gymorhome, part, musclePos):
-    if specificMuscleChoice in muscleDict[gymorhome][part]:
-        print("Use this " + gymorhome + " workout for your " + specificMuscleChoice + ":")
-        if specificMuscleChoice == muscleExercises(musclePos):
-            muscleExercises(musclePos)
+    if gymOrHomeChoice == gymOrHome[0] and specificMuscleChoice in muscleDict["Gym"][part]:
+        print("Here's a list of " + specificMuscleChoice + " exercises for the gym: ")
+        if specificMuscleChoice == muscleExercises(musclePos, "Gym"):
+            muscleExercises(musclePos, "Gym")
+            return True
+    elif gymOrHomeChoice == gymOrHome[1] and specificMuscleChoice in muscleDict["Home"][part]:
+        print("Here's a list of  " + specificMuscleChoice + " exercises for home: ")
+        if specificMuscleChoice == muscleExercises(musclePos, "Home"):
+            muscleExercises(musclePos, "Home")
             return True
     else:
-        while specificMuscleChoice not in muscleDict[gymorhome][part]:
+        while gymOrHomeChoice not in gymOrHome and specificMuscleChoice not in muscleDict[gymorhome][part]:
             print("Choose one of these " + part + " muscles: ")
             print(muscleDict[gymorhome][part])
             return True
     return False
 
-def muscleExercises(exerciseLine1):
-        checkExercisesTxt(exerciseLine1+1)
-        checkExercisesTxt(exerciseLine1+2)
-        checkExercisesTxt(exerciseLine1+3)
+def muscleExercises(exerciseLine1, gymorhome):
+        checkExercisesTxt(exerciseLine1+1, gymorhome)
+        checkExercisesTxt(exerciseLine1+2, gymorhome)
+        checkExercisesTxt(exerciseLine1+3, gymorhome)
         return True
+
+def checkExercisesTxt(lineNum, gymorhome):
+    if gymorhome == "Gym":
+        exercise_file = open("exercisesGym.txt", "r")
+        for line in exercise_file:
+            print(exercise_file.readlines()[lineNum], end='')
+            exercise_file.close
+            return True
+    elif gymorhome == "Home":
+        exercise_file = open("exercisesHome.txt", "r")
+        for line in exercise_file:
+            print(exercise_file.readlines()[lineNum], end='')
+            exercise_file.close
+            return True
+    return False
     
     
 while focus():
@@ -92,17 +104,30 @@ while focus():
                 else:
                     if 1 <= session <= 1441:
                         gymOrHomeChoice = input("Do you work out in the gym or at home? ")
-                        if gymOrHomeChoice not in gymorhome:
-                            gymOrHomeChoice = input('''Please enter either "Gym" or "Home": ''')
-                            if gymOrHomeChoice not in gymorhome:
-                                pass
-                        elif gymOrHomeChoice in gymorhome:
+                        if gymOrHomeChoice not in gymOrHome:
+                            gymOrHomeChoice = input('''Please enter either "Gym" or "Home" ''')
+                            pass
+                        elif gymOrHomeChoice in gymOrHome:
                             try:
                                 specificMuscleChoice = input("What muscle do you want to focus on? ")
                                 muscleLine = muscleList.index(specificMuscleChoice)
                                 workoutOutput(gymOrHomeChoice, part, muscleLine)
+                                if specificMuscleChoice in muscleList:
+                                    if schedule <= 3:
+                                        print("For 1 day out of the week: ")
+                                        if session <= 90:
+                                            print("Add 2-3 of these exercises to your workout. ")
+                                        elif session > 90:
+                                            print("Only add 1 of these exercises to your workout. ")
+                                    elif schedule >= 4:
+                                        print("For 2 days out of the week: ")
+                                        if session <= 90:
+                                            print("Add 2-3 of these exercises to your workout. ")
+                                        elif session > 90:
+                                            print("Only add 1 of these exercises to your workout. ")
+                                else:
+                                    print("Enter a muscle.")
                             except ValueError:
                                 print("Enter one of the following: ")
                                 print(muscleDict[gymOrHomeChoice][part])
-                    else:
-                        break
+                            break
