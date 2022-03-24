@@ -88,3 +88,6 @@ while focus():
         muscleLine = muscleList.index(specificMuscleChoice)
         workoutOutput(gymOrHomeChoice, part, muscleLine)
         break
+
+#test
+#test2
