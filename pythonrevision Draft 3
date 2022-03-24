@@ -45,7 +45,7 @@ def focus():
     return False
 
 def checkExercisesTxt(lineNum):
-    exercise_file = open("exercises.txt", "r")
+    exercise_file = open("exercisesGym.txt", "r")
     for line in exercise_file:
         print(exercise_file.readlines()[lineNum], end='')
         exercise_file.close
@@ -104,5 +104,5 @@ while focus():
                             except ValueError:
                                 print("Enter one of the following: ")
                                 print(muscleDict[gymOrHomeChoice][part])
-                            else:
-                                break
+                    else:
+                        break
