@@ -3,24 +3,23 @@
 areas = ["Core", "Arms", "Back", "Chest", "Legs", "Shoulders"]
 gymorhome = ["Gym", "Home"]
 muscleList = [
-"Upper Abs",' ', ' ', ' ', 
-"Lower Abs",' ', ' ', ' ', 
-"Biceps", ' ', ' ', ' ', 
-"Forearms", ' ', ' ', ' ', 
-"Triceps", ' ', ' ', ' ', 
-"Lats", ' ', ' ', ' ', 
-"Rhomboids", ' ', ' ', ' ', 
-"Traps", ' ', ' ', ' ', 
-"Glutes", ' ', ' ', ' ', 
-"Upper Pecs", ' ', ' ', ' ', 
-"Middle Pecs", ' ', ' ', ' ', 
-"Lower Pecs", ' ', ' ', ' ', 
-"Hamstrings", ' ', ' ', ' ', 
-"Quads", ' ', ' ', ' ', 
-"Calves",' ', ' ', ' ', 
-"Front Delts", ' ', ' ', ' ', 
+"Upper Abs",'','','', 
+"Lower Abs",'','','', 
+"Biceps",'','','', 
+"Forearms",'','','', 
+"Triceps",'','','', 
+"Lats",'','','', 
+"Rhomboids",'','','', 
+"Traps",'','','', 
+"Glutes",'','','', 
+"Upper Pecs",'','','', 
+"Middle Pecs",'','','', 
+"Lower Pecs",'','','', 
+"Hamstrings",'','','', 
+"Quads",'','','', 
+"Calves",'','','', 
+"Front Delts",'','','', 
 "Back Delts"]
-
 muscleDict = {
 "Gym": {
     "Core": {"Upper Abs", "Lower Abs"}, 
@@ -50,44 +49,60 @@ def checkExercisesTxt(lineNum):
     for line in exercise_file:
         print(exercise_file.readlines()[lineNum], end='')
         exercise_file.close
+        return True
+    return False
 
 def workoutOutput(gymorhome, part, musclePos):
     if specificMuscleChoice in muscleDict[gymorhome][part]:
         print("Use this " + gymorhome + " workout for your " + specificMuscleChoice + ":")
         if specificMuscleChoice == muscleExercises(musclePos):
             muscleExercises(musclePos)
+            return True
     else:
-        print("Choose one of these " + part + " muscles: ")
-        print(muscleDict[gymorhome][part])
+        while specificMuscleChoice not in muscleDict[gymorhome][part]:
+            print("Choose one of these " + part + " muscles: ")
+            print(muscleDict[gymorhome][part])
+            return True
     return False
 
 def muscleExercises(exerciseLine1):
         checkExercisesTxt(exerciseLine1+1)
         checkExercisesTxt(exerciseLine1+2)
         checkExercisesTxt(exerciseLine1+3)
+        return True
+    
     
 while focus():
     part = input("What area do you feel is underdeveleoped? ")
     if part not in areas:
         print('''Please enter "Core", "Arms", "Back", "Chest", "Legs", or "Shoulders"''')
     elif part in areas:
-        schedule = input("How many days a week do you work out for? ")
         try:
+            schedule = int(input("How many days a week do you work out for? "))
+        except ValueError:
+            print("Enter a number. ")
+            pass
+        else:
             if 1 <= int(schedule) <= 7:
-                session = input("How many minutes do you work out for? ")
                 try:
-                    if 1 <= int(session) <= 1440:
-                        gymOrHomeChoice = input("Do you work out at home or in the gym? ")
+                    session = int(input("How many minutes do you work out for? "))
+                except ValueError:
+                    print("Enter a number. ")
+                    pass
+                else:
+                    if 1 <= session <= 1441:
+                        gymOrHomeChoice = input("Do you work out in the gym or at home? ")
                         if gymOrHomeChoice not in gymorhome:
                             gymOrHomeChoice = input('''Please enter either "Gym" or "Home": ''')
-                except ValueError:
-                    print("Enter a number: ")
-        except ValueError:
-            print("Enter a number: ")
-        specificMuscleChoice = input("What muscle do you want to focus on? ")
-        muscleLine = muscleList.index(specificMuscleChoice)
-        workoutOutput(gymOrHomeChoice, part, muscleLine)
-        break
-
-#test
-#test2
+                            if gymOrHomeChoice not in gymorhome:
+                                pass
+                        elif gymOrHomeChoice in gymorhome:
+                            try:
+                                specificMuscleChoice = input("What muscle do you want to focus on? ")
+                                muscleLine = muscleList.index(specificMuscleChoice)
+                                workoutOutput(gymOrHomeChoice, part, muscleLine)
+                            except ValueError:
+                                print("Enter one of the following: ")
+                                print(muscleDict[gymOrHomeChoice][part])
+                            else:
+                                break
