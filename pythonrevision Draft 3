@@ -1,8 +1,5 @@
 #WORKOUT GENERATOR#
 #Goal of Code - Create a workout routine depending on what parts of body are lacking in strength
-import sched
-
-
 areas = ["Core", "Arms", "Back", "Chest", "Legs", "Shoulders"]
 gymOrHome = ["Gym", "Home"]
 weekRange = (0,8)
@@ -55,15 +52,15 @@ def workoutOutput(gymorhome, part, musclePos):
     return True
     
 
-# def muscleExercises(exerciseLine1, gymorhome):
-#         checkExercisesTxt(exerciseLine1+2, gymorhome)
-#         checkExercisesTxt(exerciseLine1+3, gymorhome)
-#         checkExercisesTxt(exerciseLine1+4, gymorhome)
-#         return True
+def muscleExercises(exerciseLine1, gymorhome):
+        checkExercisesTxt(exerciseLine1+2, gymorhome)
+        checkExercisesTxt(exerciseLine1+3, gymorhome)
+        checkExercisesTxt(exerciseLine1+4, gymorhome)
+        return True
 
-def muscleExercises(exercises, gymorhome):
-  result = map(lambda exercises, gymorhome: checkExercisesTxt(exercises+1, gymorhome), exercises, gymorhome)
-  return result
+# def muscleExercises(exercises, gymorhome):
+#   result = map(lambda exercises, gymorhome: checkExercisesTxt(exercises+1, gymorhome), exercises, gymorhome)
+#   return result
 
 def checkExercisesTxt(lineNum, gymorhome):
     with open(f'exercises{gymorhome}.txt', 'r') as f:
@@ -78,7 +75,7 @@ while focus():
     if part in areas:
         schedule = input("How many days a week do you work out for? ")
         try:
-            while 0 >= int(schedule) or int(schedule) >= 7:
+            while 0 >= int(schedule) or int(schedule) >= 8:
                 schedule = input("Enter a number between 1 and 7. ")
             else:
                 pass
@@ -96,17 +93,12 @@ while focus():
             muscleLine = muscleList.index(specificMuscleChoice)
             workoutOutput(gymOrHomeChoice, part, muscleLine)
             if specificMuscleChoice in muscleDict[gymOrHomeChoice][part]:
-                if schedule <= 3:
+                if int(schedule) <= 3:
                     print("For 1 day out of the week: ")
-                    if session <= 90:
-                        print("Add 2-3 of these exercises to your workout. ")
-                    elif session > 90:
-                        print("Only add 1 of these exercises to your workout. ")
-                elif schedule >= 4:
-                    print("For 2 days out of the week: ")
-                    if session <= 90:
-                        print("Add 2-3 of these exercises to your workout. ")
-                    elif session > 90:
-                        print("Only add 1 of these exercises to your workout. ")
+                print("For 2 days out of the week: ")
+                if int(session) <= 90:
+                    print("Add 2-3 of these exercises to your workout. ")
+                print("Only add 1 of these exercises to your workout. ")
+
 
 
