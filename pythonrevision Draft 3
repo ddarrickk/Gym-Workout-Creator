@@ -77,13 +77,11 @@ while focus():
         try:
             while 0 >= int(schedule) or int(schedule) >= 8:
                 schedule = input("Enter a number between 1 and 7. ")
-            else:
-                pass
+            pass
             session = input("How many minutes do you work out for? ")
             while 0 >= int(session) or int(session) >= 1441:
                 session = input("Enter a number between 1 and 1440. ")
-            else:
-                pass
+            pass
         except ValueError:
             print("Enter a number. ")
             continue
@@ -97,8 +95,8 @@ while focus():
                     print("For 1 day out of the week: ")
                 print("For 2 days out of the week: ")
                 if int(session) <= 90:
-                    print("Add 2-3 of these exercises to your workout. ")
-                print("Only add 1 of these exercises to your workout. ")
+                    print("Only add 1 of these exercises to your workout. ")
+                print("Add 2-3 of these exercises to your workout. ")
 
 
 
