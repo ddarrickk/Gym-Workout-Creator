@@ -1,5 +1,8 @@
 #WORKOUT GENERATOR#
 #Goal of Code - Create a workout routine depending on what parts of body are lacking in strength
+import sched
+
+
 areas = ["Core", "Arms", "Back", "Chest", "Legs", "Shoulders"]
 gymOrHome = ["Gym", "Home"]
 weekRange = (0,8)
@@ -75,15 +78,15 @@ while focus():
     if part in areas:
         schedule = input("How many days a week do you work out for? ")
         try:
-            if 1 <= int(schedule) <= 7:
-                pass
+            while 0 >= int(schedule) or int(schedule) >= 7:
+                schedule = input("Enter a number between 1 and 7. ")
             else:
-                continue
+                pass
             session = input("How many minutes do you work out for? ")
-            if 1 <= int(session) <= 1441:
-                pass
+            while 0 >= int(session) or int(session) >= 1441:
+                session = input("Enter a number between 1 and 1440. ")
             else:
-                continue
+                pass
         except ValueError:
             print("Enter a number. ")
             continue
